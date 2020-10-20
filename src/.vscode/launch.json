@@ -1,0 +1,45 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: utils",
+            "type": "python",
+            "request": "launch",
+            "module": "utils"
+        },
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Launch Server",
+            "type": "python",
+            "request": "launch",
+            "program": "${cwd}/__main__.py",
+            "args": [
+                "--type", "server",
+                "--target", "EC9C0F7EDCC18A98B1F31853B1813301",
+                "-d"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Launch Client",
+            "type": "python",
+            "request": "launch",
+            "program": "${cwd}/__main__.py",
+            "args": [
+                "--type", "client",
+                "-d"
+            ],
+            "console": "integratedTerminal"
+        }
+    ]
+}
