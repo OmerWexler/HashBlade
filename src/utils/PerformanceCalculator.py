@@ -8,10 +8,15 @@ class PerformanceCalculator:
     __CPU_UTILIZATION_POLL_TIMES = 10
 
 
-    def __init__(self, inject_cores=None, inject_frequency=None, inject_utilization=None):
-        self.__inject_cores = inject_cores
-        self.__inject_frequency = inject_frequency
-        self.__inject_utilization = inject_utilization
+    def __init__(self, simulate=None):
+        if simulate != None and isinstance(simulate, CPUPerformance): 
+            self.__inject_cores = simulate.get_cores()
+            self.__inject_frequency = simulate.get_frequency()
+            self.__inject_utilization = simulate.get_utilization()
+        else:
+            self.__inject_cores = None
+            self.__inject_frequency = None
+            self.__inject_utilization = None
 
 
     def analyze_cpu_performance_relative(self, 
@@ -69,12 +74,13 @@ class PerformanceCalculator:
         scaled_cores = Utils.scale(cores, cpu_min_cores, cpu_max_cores) 
         scaled_freq = Utils.scale(freq, cpu_min_frequency, cpu_max_frequency)
         scaled_util = Utils.scale(utilization, cpu_min_utilization, cpu_max_utilization, True)
-
+        overall = Utils.scale(scaled_cores * scaled_freq * scaled_util, 0.0, 1.0)
+        
         if debug:
             print(f'Raw:\nCores - {cores}, utilization - {utilization}, freq - {freq}')
             print(f'Scaled:\nCores - {scaled_cores}, utilization - {scaled_util}, freq - {scaled_freq}')
 
-        return CPUPerformance(scaled_cores, scaled_freq, scaled_util)
+        return CPUPerformance(cores, freq, utilization, overall)
         
 
     def get_cpu_count(self):

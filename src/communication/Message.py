@@ -1,10 +1,10 @@
 import communication.MessageType as mt
 
 class Message:
-    def __init__(self, message_type: mt.MessageType, __raw_message, args):
+    def __init__(self, message_type: mt.MessageType, raw_message: str, args: dict):
         self.__type = message_type
         self.__args = args
-        self.__raw_message = __raw_message
+        self.__raw_message = raw_message
 
 
     def get_type(self):

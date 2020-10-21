@@ -1,5 +1,7 @@
 import communication.Message as m
 import communication.MessageType as mt
+from utils import CPUPerformance
+
 
 class MessageParser:
     __seperator = '@@@'
@@ -35,7 +37,47 @@ class MessageParser:
 
         return m.Message(message_type, raw_message, message_args)
 
-    
+
+    @staticmethod
+    def __pack_message(mtype, args: dict):
+        raw_message = mtype.value.format(**args)
+        return m.Message(mtype, raw_message, args)
+
+
+    @staticmethod
+    def pack_hash_assignment(hash_key: str):
+        return MessageParser.__pack_message(mt.MessageType.ASSIGN_HASH, {'hash_key': hash_key})
+
+
+    @staticmethod
+    def pack_hash_result_report(hash_key: str, hash_result: str):
+        return MessageParser.__pack_message(mt.MessageType.REPORT_RESULT, {'hash_key': hash_key, 'hash_result': hash_result})
+
+
+    @staticmethod
+    def pack_performance_request():
+        return MessageParser.__pack_message(mt.MessageType.REQUEST_PERFORMANCE, {})
+
+
+    @staticmethod
+    def pack_performance_report(CPUPerformance: CPUPerformance):
+        args = {
+            'cores': CPUPerformance.get_cores(),
+            'frequency': CPUPerformance.get_frequency(),
+            'utilization': CPUPerformance.get_utilization()
+        }
+        return MessageParser.__pack_message(mt.MessageType.REPORT_PERFORMANCE, args)
+
+
+    @staticmethod
+    def pack_hash_results_request():
+        return MessageParser.__pack_message(mt.MessageType.REQUEST_RESULTS, {})
+
+
+    @staticmethod
+    def cpu_performance_from_message(message):
+        args = message.get_args()
+        return CPUPerformance.CPUPerformance(args['cores'], args['frequency'], args['utilization'])
 
 
 class ParseError(Exception):
