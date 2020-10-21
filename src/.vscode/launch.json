@@ -11,6 +11,12 @@
             "module": "utils"
         },
         {
+            "name": "Python: communication",
+            "type": "python",
+            "request": "launch",
+            "module": "communication"
+        },
+        {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",

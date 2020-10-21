@@ -1492,7 +1492,7 @@
 <XPD:ATTR name="#Attributes" type="integer">1</XPD:ATTR>
 <XPD:OBJ name="Attributes[0]" type="UMLAttribute" guid="QsM8TbN+fUC1VXxXjQtx3gAA">
 <XPD:ATTR name="Name" type="string">socket</XPD:ATTR>
-<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
+<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkProtected</XPD:ATTR>
 <XPD:REF name="Owner">FqQNiukv0kSIOXy1JOo23gAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>

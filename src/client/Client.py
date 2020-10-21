@@ -17,7 +17,7 @@ class Client:
         self.__ClientCommunicator = ClientCommunicator(args.host, args.port, args.connection_interval, args.connection_retries)
 
        
-    def init(self) -> None:
+    def init(self):
         if self.__debug:
             print(f'Initiating client:')
             print(self.__ClientCommunicator)

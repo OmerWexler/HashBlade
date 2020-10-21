@@ -15,13 +15,13 @@ class ServerCommunicator:
         self.__client_accept_thread = None
         
 
-    def start_accepting_clients(self) -> None:
+    def start_accepting_clients(self):
         self.__client_accept_thread = multiprocessing.Process(target=self.__accept_clients)
         self.__client_accept_thread.daemon = True
         self.__client_accept_thread.start()
 
 
-    def accept_clients(self) -> None:
+    def accept_clients(self):
         print('Starting to accept clients.')
         while True:
             addr, client = self.__hs.accept()
@@ -30,7 +30,7 @@ class ServerCommunicator:
             print(f'Client connected from {addr}')
     
     
-    def __str__(self) -> str:
+    def __str__(self):
         string = f'Port - {self.__port}\n'
         string += f'Host - {self.__host}\n'
         return string

@@ -18,7 +18,7 @@ class Server:
         self.__server_communicator = ServerCommunicator(args.host, args.port)
 
 
-    def init(self) -> None:
+    def init(self):
         if self.__debug:
             print(f'Initiating server:')
             print(self.__server_communicator)

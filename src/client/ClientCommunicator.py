@@ -11,7 +11,7 @@ class ClientCommunicator:
         self.__connection_retries = connection_retries
 
 
-    def connect(self) -> bool:
+    def connect(self):
         for i in range(self.__connection_retries):
             try:
                 if dubug: print(f'Attempting connection to - ({self.__host}, {self.__port})...')
@@ -29,7 +29,7 @@ class ClientCommunicator:
         return False
 
 
-    def __str__(self) -> str:
+    def __str__(self):
         string = f'Port - {self.__port}\n'
         string += f'Host - {self.__host}\n'
         string += f'Connection retries - {self.__connection_retries}\n'
