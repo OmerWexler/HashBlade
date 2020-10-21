@@ -14,5 +14,9 @@ for mtype in MessageType:
     print(f'{mtype} - {mtype.value}')
 
 print('\n\nMessage build:')
-m = MessageType.ASSIGN_HASH.value
-print(m.format(**{'hash_key': 1111}))
+m = MessageType.ASSIGN_HASH.value.format(**{'hash_key': 1111})
+print(m)
+
+print('\n\nParse:')
+m = MessageParser.parse_message(m)
+print(m)
