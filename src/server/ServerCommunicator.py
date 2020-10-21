@@ -1,35 +1,45 @@
 import socket
 import multiprocessing 
 
-class ServerCommunicator:
+from communication import Communicator
+from communication import MessageParser
+
+
+class ServerCommunicator(Communicator):
     def __init__(self, host: str, port: int):
+        super().__init__('ServerCommunicator')
         self.__host = host
         self.__port = port
         
-        self.__hs = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.__hs.bind((self.host, self.port))
-        self.__hs.listen(10)
-        self.__clients = []
-        self.__client_threads = []
-
-        self.__client_accept_thread = None
+        self._socket.bind((self.host, self.port))
+        self._socket.listen(10)
         
-
-    def start_accepting_clients(self):
-        self.__client_accept_thread = multiprocessing.Process(target=self.__accept_clients)
-        self.__client_accept_thread.daemon = True
-        self.__client_accept_thread.start()
+        self.__clients = []
 
 
-    def accept_clients(self):
-        print('Starting to accept clients.')
+    def accept_client(self):
         while True:
-            addr, client = self.__hs.accept()
-            self.__clients.append(client)
-            self.__client_threads.append(multiprocessing.Process(target=self.__accept_clients), args=(client))
+            addr, client = self._socket.accept()
+            self.__clients.append(Communicator(f'Client{len(self.__clients)} of {self._name}', client))
             print(f'Client connected from {addr}')
     
     
+    def get_number_of_client(self):
+        return len(self.__clients)
+
+
+    def request_performance(self, client_id: int):
+        self.__clients[client_id].send_message(MessageParser.pack_performance_request())
+
+
+    def assign_hash_key(self, client_id: int, hash_key: str):
+        self.__clients[client_id].send_message(MessageParser.pack_hash_assignment(hash_key))
+
+
+    def request_hash_result(self, client_id: int, hash_key: str):
+        self.__clients[client_id].send_message(MessageParser.pack_hash_assignment(hash_key))
+
+
     def __str__(self):
         string = f'Port - {self.__port}\n'
         string += f'Host - {self.__host}\n'
