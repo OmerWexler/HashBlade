@@ -5,6 +5,7 @@ from utils import CPUPerformance
 
 class MessageParser:
     __seperator = '@@@'
+    length_size = 2 # bytes
     
     @staticmethod
     def generate_format(message_type: int, args: list):

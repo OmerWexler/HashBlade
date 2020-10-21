@@ -135,7 +135,7 @@
 <XPD:ATTR name="Left" type="integer">208</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">328</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">105</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">95</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">147</XPD:ATTR>
 <XPD:REF name="Model">cXLVQQLyO06Ak40wi9+eUwAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="D7nsqv+Ne0SB87lIZ45A6wAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="Wya6qxq5hk6IkHIX4/ryxwAA">
@@ -1402,6 +1402,23 @@
 <XPD:REF name="Views[1]">uZLxwRmgXk+16Xkwjl1jVwAA</XPD:REF>
 <XPD:REF name="Views[2]">KxdaFnTlVUivfKdQQ7868wAA</XPD:REF>
 <XPD:REF name="Views[3]">ZzWn0MRgekyADpTzDypncAAA</XPD:REF>
+<XPD:ATTR name="#Operations" type="integer">4</XPD:ATTR>
+<XPD:OBJ name="Operations[0]" type="UMLOperation" guid="M1RcNrJRaEOtsknWIBgRoAAA">
+<XPD:ATTR name="Name" type="string">get_cores</XPD:ATTR>
+<XPD:REF name="Owner">cXLVQQLyO06Ak40wi9+eUwAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Operations[1]" type="UMLOperation" guid="ppLsQCPMG0e6UNThdu42bQAA">
+<XPD:ATTR name="Name" type="string">get_frequency</XPD:ATTR>
+<XPD:REF name="Owner">cXLVQQLyO06Ak40wi9+eUwAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Operations[2]" type="UMLOperation" guid="7emyIFjIsUGgszq18Oop0QAA">
+<XPD:ATTR name="Name" type="string">get_utilization</XPD:ATTR>
+<XPD:REF name="Owner">cXLVQQLyO06Ak40wi9+eUwAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Operations[3]" type="UMLOperation" guid="D3paoimyQUyFfsUVJp08HAAA">
+<XPD:ATTR name="Name" type="string">get_overall</XPD:ATTR>
+<XPD:REF name="Owner">cXLVQQLyO06Ak40wi9+eUwAA</XPD:REF>
+</XPD:OBJ>
 <XPD:ATTR name="#TypedParameters" type="integer">2</XPD:ATTR>
 <XPD:REF name="TypedParameters[0]">sX9oCgMCqUqyyHAr63AGXQAA</XPD:REF>
 <XPD:REF name="TypedParameters[1]">n8yav4PStEyRkP5IbFx2zgAA</XPD:REF>
@@ -1412,18 +1429,22 @@
 <XPD:ATTR name="#Attributes" type="integer">4</XPD:ATTR>
 <XPD:OBJ name="Attributes[0]" type="UMLAttribute" guid="58j4mzQgRE6E9G89H1iL4AAA">
 <XPD:ATTR name="Name" type="string">cores</XPD:ATTR>
+<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">cXLVQQLyO06Ak40wi9+eUwAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Attributes[1]" type="UMLAttribute" guid="J1FbwcmFPUSt4XJWRWY+JQAA">
 <XPD:ATTR name="Name" type="string">frequency</XPD:ATTR>
+<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">cXLVQQLyO06Ak40wi9+eUwAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Attributes[2]" type="UMLAttribute" guid="Dz6lRek/Lk6xL5IzaKRDrAAA">
 <XPD:ATTR name="Name" type="string">utilization</XPD:ATTR>
+<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">cXLVQQLyO06Ak40wi9+eUwAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Attributes[3]" type="UMLAttribute" guid="KZ9XZPUfbUmSr4eD+XyK4AAA">
 <XPD:ATTR name="Name" type="string">overall</XPD:ATTR>
+<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">cXLVQQLyO06Ak40wi9+eUwAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
