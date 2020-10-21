@@ -35,6 +35,8 @@ class MessageParser:
 
         return m.Message(message_type, raw_message, message_args)
 
+    
+
 
 class ParseError(Exception):
     def __init__(self, parse_error, raw_message):
