@@ -1,37 +1,36 @@
 import time
 import socket
 
-class ClientCommunicator:
-    def __init__(self, host: str, port: int, connection_interval: int, connection_retries: int):
-        self.__socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+from communication import Communicator
+from communication import MessageParser
+from utils import CPUPerformance
+
+
+class ClientCommunicator(Communicator):
+    def __init__(self, host: str, port: int):
+        super().__init__('ClientCommunicator')
         self.__host = host
         self.__port = port
 
-        self.__connection_interval = connection_interval
-        self.__connection_retries = connection_retries
-
 
     def connect(self):
-        for i in range(self.__connection_retries):
-            try:
-                if dubug: print(f'Attempting connection to - ({self.__host}, {self.__port})...')
-                self.__socket.connect((self.__host, self.__port))
-                if dubug: print(f'Connection to server at - ({self.__host}, {self.__port}) successful.')
-                return True
-            except ConnectionRefusedError:
-                self.print(f'Failed to connect to - ({self.__host}, {self.__port}), {self.__connection_retries - i} retries left...\n')
-                for i in range(self.__connection_interval):
-                    if debug: print(f'Retrying to connect in {self.__connection_interval - i}')
-                    time.sleep(1)
-    
-        self.print(f'Failed to connect to - ({self.host}, {self.__port}).')
-        self.print('No more retries left, exiting...')
-        return False
+        super()._connect(self.__host, self.__port)
+
+
+    def accept_message(self):
+        return super()._accept_message()
+
+
+    def report_performance(self, CPUPerformance):
+        self._send_message(MessageParser.pack_performance_report(CPUPerformance))
+
+
+    def report_hash_result(self, hash_key, hash_result):
+        self._send_message(MessageParser.pack_hash_result_report(hash_key, hash_result))
 
 
     def __str__(self):
+        string += super().__str__()
         string = f'Port - {self.__port}\n'
         string += f'Host - {self.__host}\n'
-        string += f'Connection retries - {self.__connection_retries}\n'
-        string += f'Connection interval - {self.__connection_interval}'
         return string

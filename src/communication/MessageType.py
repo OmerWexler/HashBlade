@@ -1,14 +1,14 @@
 from enum import Enum, unique
+import communication.MessageFormat as mf
 
-import communication.MessageParser as mp
 
 @unique
 class MessageType(Enum):
-    REQUEST_PERFORMANCE = mp.MessageParser.generate_format(0, [])
-    REPORT_PERFORMANCE = mp.MessageParser.generate_format(1, ['cores', 'frequency', 'utilization'])
-    ASSIGN_HASH = mp.MessageParser.generate_format(2, ['hash_key'])
-    REPORT_RESULT = mp.MessageParser.generate_format(4, ['hash_key', 'hash_result'])
-    REQUEST_RESULTS = mp.MessageParser.generate_format(3, [])
+    REQUEST_PERFORMANCE = mf.MessageFormat(0, [])
+    REPORT_PERFORMANCE = mf.MessageFormat(1, ['cores', 'frequency', 'utilization'])
+    ASSIGN_HASH = mf.MessageFormat(2, ['hash_key'])
+    REQUEST_RESULTS = mf.MessageFormat(3, [])
+    REPORT_RESULT = mf.MessageFormat(4, ['hash_key', 'hash_result'])
 
 
     @staticmethod
@@ -16,7 +16,7 @@ class MessageType(Enum):
         mid = str(mid).zfill(2)
         
         for mtype in MessageType:
-            if mtype.value.startswith(mid):
+            if mtype.value.get_mid() == mid:
                 return mtype
         
         raise MessageTypeDoesntExist(mid)

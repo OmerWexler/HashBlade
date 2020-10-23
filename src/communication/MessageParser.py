@@ -1,48 +1,37 @@
-import communication.Message as m
+import communication.Message as Message
 import communication.MessageType as mt
 from utils import CPUPerformance
 
 
 class MessageParser:
-    __seperator = '@@@'
+    seperator = '@@@'
     length_size = 2 # bytes
-    
-    @staticmethod
-    def generate_format(message_type: int, args: list):
-        sep = MessageParser.__seperator
-        message_type = str(message_type)
-        wrapped_args = []
-
-        for arg in args:
-            arg = '{' + arg + '}'
-            wrapped_args.append(arg)
-
-        return str(message_type.zfill(2) + sep + sep.join(wrapped_args))
 
 
     # type@@@arg@@@arg@@@arg...
     @staticmethod
     def parse_message(raw_message: str):
-        message_type = raw_message.split(MessageParser.__seperator)[0]
+        message_type = raw_message.split(MessageParser.seperator)[0]
         message_type = mt.MessageType.translate_from_id(message_type)
         
-        message_args_names = message_type.value.replace('{', '').replace('}', '').split(MessageParser.__seperator)[1:]
-        message_args_values = raw_message.split(MessageParser.__seperator)[1:]
+        # message_args_names = message_type.value.replace('{', '').replace('}', '').split(MessageParser.seperator)[1:]
+        message_args_names = message_type.value.get_args_names()
+        message_args_values = raw_message.split(MessageParser.seperator)[1:]
 
         if len(message_args_names) != len(message_args_values):
-            raise InvalidNumberOfArguments(len(message_args_names), len(message_args_values))
+            raise InvalidNumberOfArguments(len(message_args_names), len(message_args_values), raw_message)
 
         message_args = {}
         for i in range(len(message_args_names)):
             message_args[message_args_names[i]] = message_args_values[i]
 
-        return m.Message(message_type, raw_message, message_args)
+        return Message(message_type, raw_message, message_args)
 
 
     @staticmethod
     def __pack_message(mtype, args: dict):
-        raw_message = mtype.value.format(**args)
-        return m.Message(mtype, raw_message, args)
+        raw_message = mtype.value.build(args)
+        return Message(mtype, raw_message, args)
 
 
     @staticmethod
@@ -87,5 +76,5 @@ class ParseError(Exception):
 
 
 class InvalidNumberOfArguments(ParseError):
-    def __init__(self, number_of_raw_arguments, number_of_actual_arguments):
-        super.__init__(f'number of required arguments - {number_of_raw_arguments} but received - {number_of_actual_arguments} arguments.')
+    def __init__(self, number_of_raw_arguments, number_of_actual_arguments, raw_message):
+        super().__init__(f'number of required arguments - {number_of_raw_arguments} but received - {number_of_actual_arguments} arguments.', raw_message)

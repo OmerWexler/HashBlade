@@ -1,14 +1,15 @@
 from .MessageParser import MessageParser
 from .MessageType import MessageType
+from .MessageFormat import MessageFormat
 from utils import CPUPerformance
 
 
-print('Message parser:')
-msg_format = MessageParser.generate_format(00, ['arg1', 'arg2'])
+print('Message format:')
+msg_format = MessageFormat(00, ['arg1', 'arg2']).get_raw_format()
 print(msg_format)
 print(msg_format.format(arg1='value1', arg2='value2'))
 
-msg_format = MessageParser.generate_format(00, [])
+msg_format = MessageFormat(00, []).get_raw_format()
 print(msg_format)
 
 print('\n\nMessage type:')
