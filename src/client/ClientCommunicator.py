@@ -18,18 +18,23 @@ class ClientCommunicator(Communicator):
 
 
     def accept_message(self):
-        return super()._accept_message()
+        return super().accept_message()
 
 
     def report_performance(self, CPUPerformance):
-        self._send_message(MessageParser.pack_performance_report(CPUPerformance))
+        self.send_message(MessageParser.pack_performance_report(CPUPerformance))
 
 
-    def report_hash_result(self, hash_key, hash_result):
-        self._send_message(MessageParser.pack_hash_result_report(hash_key, hash_result))
+    def report_hash_result(self, hash_range, hash_result):
+        self.send_message(MessageParser.pack_hash_result_report(hash_range, hash_result))
 
 
+    def disconnect(self):
+        super()._disconnect()
+
+    
     def __str__(self):
+        string = ''
         string += super().__str__()
         string = f'Port - {self.__port}\n'
         string += f'Host - {self.__host}\n'

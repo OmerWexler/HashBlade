@@ -35,13 +35,13 @@ class MessageParser:
 
 
     @staticmethod
-    def pack_hash_assignment(hash_key: str):
-        return MessageParser.__pack_message(mt.MessageType.ASSIGN_HASH, {'hash_key': hash_key})
+    def pack_hash_assignment(hash_range): 
+        return MessageParser.__pack_message(mt.MessageType.ASSIGN_HASH, {'range_start': hash_range[0], 'range_end': hash_range[-1]})
 
 
     @staticmethod
-    def pack_hash_result_report(hash_key: str, hash_result: str):
-        return MessageParser.__pack_message(mt.MessageType.REPORT_RESULT, {'hash_key': hash_key, 'hash_result': hash_result})
+    def pack_hash_result_report(hash_range, hash_result: str):
+        return MessageParser.__pack_message(mt.MessageType.REPORT_RESULT, {'range_start': hash_range[0], 'range_end': hash_range[-1], 'hash_result': hash_result})
 
 
     @staticmethod
@@ -60,14 +60,19 @@ class MessageParser:
 
 
     @staticmethod
-    def pack_hash_results_request():
-        return MessageParser.__pack_message(mt.MessageType.REQUEST_RESULTS, {})
+    def pack_hash_results_request(hash_target: str):
+        return MessageParser.__pack_message(mt.MessageType.REQUEST_RESULTS, {'hash_target': hash_target})
+
+
+    @staticmethod
+    def pack_kill_request():
+        return MessageParser.__pack_message(mt.MessageType.KILL, {})
 
 
     @staticmethod
     def cpu_performance_from_message(message):
         args = message.get_args()
-        return CPUPerformance.CPUPerformance(args['cores'], args['frequency'], args['utilization'])
+        return CPUPerformance(float(args['cores']), float(args['frequency']), float(args['utilization']))
 
 
 class ParseError(Exception):

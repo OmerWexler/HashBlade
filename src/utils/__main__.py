@@ -2,7 +2,9 @@ from utils import *
 from communication import Message
 from communication import MessageParser
 from communication import MessageType
+import logging
 
+logging.basicConfig(level=logging.DEBUG)
 test = False
 if test:
     print('Testing non-listed analysis:')
@@ -25,7 +27,7 @@ if test:
     print('Listed conclusion passed.')
 else:
     pc = PerformanceCalculator()
-    non_listed_result = pc.analyze_cpu_performance(debug=True)
+    non_listed_result = pc.analyze_cpu_performance()
 
 m = Message(MessageType.REPORT_PERFORMANCE, '', {'cores': 4, 'utilization': 4, 'frequency': 4})
 print(f'\n\nTranslating :\n{m}\n\nto CPUPerformance:')

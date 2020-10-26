@@ -43,8 +43,9 @@
             "program": "${cwd}/__main__.py",
             "args": [
                 "--type", "server",
-                "--target", "EC9C0F7EDCC18A98B1F31853B1813301",
-                "-d"
+                "--log", "INFO",
+                // "--target", "EC9C0F7EDCC18A98B1F31853B1813301"
+                "--target", "B42F7369B0479661D32D6B376E5AB4B8" // 6034958688
             ],
             "console": "integratedTerminal"
         },
@@ -55,7 +56,7 @@
             "program": "${cwd}/__main__.py",
             "args": [
                 "--type", "client",
-                "-d"
+                "--log", "INFO",
             ],
             "console": "integratedTerminal"
         }
