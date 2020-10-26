@@ -60,8 +60,8 @@ class MessageParser:
 
 
     @staticmethod
-    def pack_hash_results_request(hash_target: str):
-        return MessageParser.__pack_message(mt.MessageType.REQUEST_RESULTS, {'hash_target': hash_target})
+    def pack_target_setting(hash_target: str):
+        return MessageParser.__pack_message(mt.MessageType.SET_TARGET, {'hash_target': hash_target})
 
 
     @staticmethod

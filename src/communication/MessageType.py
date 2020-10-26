@@ -6,7 +6,7 @@ class MessageType(Enum):
     REQUEST_PERFORMANCE = mf.MessageFormat(0, [])
     REPORT_PERFORMANCE = mf.MessageFormat(1, ['cores', 'frequency', 'utilization'])
     ASSIGN_HASH = mf.MessageFormat(2, ['range_start', 'range_end'])
-    REQUEST_RESULTS = mf.MessageFormat(3, ['hash_target'])
+    SET_TARGET = mf.MessageFormat(3, ['hash_target'])
     REPORT_RESULT = mf.MessageFormat(4, ['range_start', 'range_end', 'hash_result'])
     KILL = mf.MessageFormat(5, [])
 

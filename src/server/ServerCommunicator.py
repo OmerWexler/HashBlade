@@ -12,7 +12,7 @@ class ServerCommunicator(Communicator):
         self.__host = host
         self.__port = port
         
-        self.__clients = []
+        self.__clients = {}
 
 
     def bind(self):
@@ -23,24 +23,30 @@ class ServerCommunicator(Communicator):
         return self.__clients[client_id].get_name()
 
 
-    def accept_message(self, client_id):
-        try:
-            return self.__clients[client_id].accept_message()
-        except:
-            self.__clients.pop(client_id)
+    def get_client(self, client_id):
+        return self.__clients[client_id]
 
+
+    def remove_client(self, client_id):
+        self.__clients.pop(client_id)
     
+
     def accept_client(self):
-        self.__clients.append(Communicator(f'Server{len(self.__clients)} of {self._name}', socket_override=super()._accept_client()))
-        return len(self.__clients) - 1
+        new_key = len(self.__clients.keys())
+        while new_key in self.__clients.keys():
+            new_key += 1
+            
+        new = super()._accept_client()
+        self.__clients[new_key] = Communicator(f'Server{len(self.__clients)} of {self._name}', socket_override=new)
+        return new_key
     
     
     def client_exists(self, client_id):
-        return self.get_number_of_clients() > client_id; 
+        return client_id in self.__clients.keys()
 
 
     def get_number_of_clients(self):
-        return len(self.__clients)
+        return len(self.__clients.keys())
 
 
     def __send_message_to_client(self, client_id, msg):
@@ -49,7 +55,7 @@ class ServerCommunicator(Communicator):
         if success:
             pass 
         else:
-            self.__clients.remove(client)
+            self.__clients.pop(client_id)
 
 
     def request_performance(self, client_id: int):
@@ -60,16 +66,16 @@ class ServerCommunicator(Communicator):
         self.__send_message_to_client(client_id, MessageParser.pack_hash_assignment(hash_range))
 
 
-    def request_hash_results(self, client_id: int, hash_target: str):
-        self.__send_message_to_client(client_id, MessageParser.pack_hash_results_request(hash_target))
+    def send_target(self, client_id: int, hash_target: str):
+        self.__send_message_to_client(client_id, MessageParser.pack_target_setting(hash_target))
 
 
     def kill_all(self):
-        for client in self.__clients: 
+        for client in self.__clients.values(): 
             client.send_message(MessageParser.pack_kill_request())
             client._disconnect()
 
-        self.__clients = []
+        self.__clients = {}
 
     
     def __str__(self):

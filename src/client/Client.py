@@ -22,6 +22,7 @@ class Client:
         self.__results = {}
         self.__completed_ranges = []
         self.__threads_sum = 0
+        self.__target = ''
 
 
     def init(self):
@@ -34,18 +35,11 @@ class Client:
             msg = self.__client_communicator.accept_message()
             msg_type = msg.get_type()
             
-            if msg.get_type() == MessageType.REQUEST_RESULTS:
+            if msg.get_type() == MessageType.SET_TARGET:
                 hash_target = msg.get_args()['hash_target']
+                self.__target = hash_target
 
-                if hash_target in self.__results.keys():
-                    result_to_report = self.__results[hash_target]
-                    self.__client_communicator.report_hash_result(result_to_report[0], result_to_report[1])
-                else:
-                    for completed_range in self.__completed_ranges:
-                        self.__client_communicator.report_hash_result(completed_range, '') 
-                        self.__completed_ranges.remove(completed_range)
-
-            elif msg.get_type() == MessageType.ASSIGN_HASH:
+            if msg.get_type() == MessageType.ASSIGN_HASH:
                 if self.__threads_sum == 0: # All ranges done, so clear
                     self.__results = {}
                 hash_range = range(int(msg.get_args()['range_start']), int(msg.get_args()['range_end']) + 1)
@@ -59,16 +53,18 @@ class Client:
 
         self.__client_communicator.disconnect()
 
+
     def proccess_hash_range(self, hash_range):
         logging.info(f'Starting range {hash_range}')
         for i in hash_range:
             hash_candidate = str(i).zfill(10)
-            logging.debug(f'Calaculating hash - {hash_candidate}')
             hash_result = hashlib.md5(hash_candidate.encode()).hexdigest().upper()
-            logging.debug(f'Result for {hash_candidate} - {hash_result}')
 
-            self.__results[hash_result] = (hash_range, hash_candidate)
-        
+            if self.__target == hash_result:
+                self.__client_communicator.report_hash_result(hash_range, hash_candidate)
+
+
+        self.__client_communicator.report_hash_result(hash_range, '')
         self.__completed_ranges.append(hash_range)
         self.__threads_sum -= 1
         logging.info(f'Finished range {hash_range}')

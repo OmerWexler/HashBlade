@@ -5,7 +5,7 @@ import logging
 
 class PerformanceCalculator:
     __CPU_UTILIZATION_POLL_INTERVAL = 0.5
-    __CPU_UTILIZATION_POLL_TIMES = 10
+    __CPU_UTILIZATION_POLL_TIMES = 4
 
 
     def analyze_cpu_performance(self):

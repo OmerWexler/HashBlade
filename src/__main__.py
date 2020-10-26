@@ -5,6 +5,7 @@ from client import Client
 from server import Server
 from communication import Message, MessageType
 import logging
+import multiprocessing
 
 
 parser = argparse.ArgumentParser()
@@ -16,6 +17,7 @@ numeric_level = getattr(logging, args.log, None)
 if not isinstance(numeric_level, int):
     raise ValueError('Invalid log level: %s' % loglevel)
 logging.basicConfig(level=numeric_level)
+multiprocessing.get_logger().setLevel(numeric_level)
 
 
 if args.type == 'server':
