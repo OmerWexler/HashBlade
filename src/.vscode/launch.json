@@ -44,7 +44,7 @@
             "args": [
                 "--type", "server",
                 "--log", "INFO",
-                "--target", "EC9C0F7EDCC18A98B1F31853B1813301" // ?? 3735928559
+                "--target", "EC9C0F7EDCC18A98B1F31853B1813301" // 3735928559
                 // "--target", "B42F7369B0479661D32D6B376E5AB4B8" // 6034958688
                 // "--target", "EE0A47112DFD0F3CE932206E7D23794C" // 9984726412
                 // "--target", "E0EC043B3F9E198EC09041687E4D4E8D" // 9999999999
